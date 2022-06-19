@@ -16,10 +16,10 @@ namespace OdeToFood.Pages.Restaurants
             this.restaurantData = restaurantData;
         }
         //The below method will be called when this page is requested in the browser
-        public void OnGet()
+        public void OnGet(string searchTerm)
         {
             Message = "Hello World!";
-            Restaurants = restaurantData.GetAll();
+            Restaurants = restaurantData.GetRestaurantsByName(searchTerm);
         }
     }
 }
