@@ -1,7 +1,11 @@
+using OdeToFood.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+//DI
+builder.Services.AddSingleton<IRestaurantData, InMemoryRestaurantData>();
 
 var app = builder.Build();
 
