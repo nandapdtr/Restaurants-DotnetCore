@@ -16,7 +16,7 @@ namespace OdeToFood.Data
             {
                 new Restaurant(){Id=1, Name="Kritunga", Location="India", Cuisine = CuisineType.Indian},
                 new Restaurant(){Id=2, Name="Some Italian", Location="Italy", Cuisine = CuisineType.Italian},
-                new Restaurant(){Id=1, Name="Some Mexican", Location="Mexico", Cuisine = CuisineType.Mexican},
+                new Restaurant(){Id=3, Name="Some Mexican", Location="Mexico", Cuisine = CuisineType.Mexican},
             };
         }
         public IEnumerable<Restaurant> GetAll()
@@ -32,6 +32,11 @@ namespace OdeToFood.Data
                    where String.IsNullOrEmpty(name) || r.Name.StartsWith(name)
                    orderby r.Name
                    select r;
+        }
+
+        public Restaurant GetRestaurantById(int id)
+        {
+            return restaurants.FirstOrDefault(r => r.Id == id);
         }
     }
 }
