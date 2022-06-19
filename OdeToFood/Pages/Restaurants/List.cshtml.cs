@@ -9,6 +9,8 @@ namespace OdeToFood.Pages.Restaurants
     {
         public string Message { get; set; }
         public IEnumerable<Restaurant> Restaurants { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string SearchTerm { get; set; }
         private IRestaurantData restaurantData { get; }
 
         public ListModel(IRestaurantData restaurantData)
@@ -16,10 +18,10 @@ namespace OdeToFood.Pages.Restaurants
             this.restaurantData = restaurantData;
         }
         //The below method will be called when this page is requested in the browser
-        public void OnGet(string searchTerm)
+        public void OnGet()
         {
             Message = "Hello World!";
-            Restaurants = restaurantData.GetRestaurantsByName(searchTerm);
+            Restaurants = restaurantData.GetRestaurantsByName(SearchTerm);
         }
     }
 }
