@@ -42,10 +42,12 @@ namespace OdeToFood.Data
         public Restaurant Update(Restaurant updatedRestaurant)
 		{
             Restaurant restaurant = GetRestaurantById(updatedRestaurant.Id);
-
-            restaurant.Name = updatedRestaurant.Name;
-            restaurant.Location = updatedRestaurant.Location;
-            restaurant.Cuisine = updatedRestaurant.Cuisine;
+			if (restaurant != null)
+			{
+                restaurant.Name = updatedRestaurant.Name;
+                restaurant.Location = updatedRestaurant.Location;
+                restaurant.Cuisine = updatedRestaurant.Cuisine;
+			}
 
             return restaurant;
 
