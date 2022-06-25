@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using OdeToFood.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 //DI
 builder.Services.AddSingleton<IRestaurantData, InMemoryRestaurantData>();
+//Database configuration
+builder.Services.AddDbContextPool<OddToFoodDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("OdeToFoodDb"));
+});
 
 var app = builder.Build();
 
