@@ -10,16 +10,19 @@
 	<div class="mb-3">
 		<label asp-for="Restaurant.Name" class="form-label"></label>
 		<input class="form-control" asp-for="Restaurant.Name"/>
+		<span asp-validation-for="Restaurant.Name" class="text-danger"></span>
 	</div>
 
 	<div class="mb-3">
 		<label asp-for="Restaurant.Location" class="form-label"></label>
 		<input class="form-control" asp-for="Restaurant.Location"/>
+		<span asp-validation-for="Restaurant.Location" class="text-danger"></span>
 	</div>
 
 	<div class="mb-3">
 		<label asp-for="Restaurant.Cuisine" class="form-label"></label>
 		<select class="form-select" asp-for="Restaurant.Cuisine" asp-items="Model.Cuisines"></select>
+		<span asp-validation-for="Restaurant.Cuisine" class="text-danger"></span>
 	</div>
 
 	<button type="submit" class="btn btn-primary">Save</button>
