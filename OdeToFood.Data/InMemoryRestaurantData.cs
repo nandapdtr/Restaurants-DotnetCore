@@ -39,6 +39,12 @@ namespace OdeToFood.Data
             return restaurants.SingleOrDefault(r => r.Id == id);
         }
 
+        public Restaurant Add(Restaurant newRestaurant)
+        {
+            restaurants.Add(newRestaurant);
+            newRestaurant.Id = restaurants.Max(r => r.Id) + 1;
+            return newRestaurant;
+        }
         public Restaurant Update(Restaurant updatedRestaurant)
 		{
             Restaurant restaurant = GetRestaurantById(updatedRestaurant.Id);
