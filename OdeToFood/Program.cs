@@ -6,7 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 //DI
-builder.Services.AddSingleton<IRestaurantData, InMemoryRestaurantData>();
+//builder.Services.AddSingleton<IRestaurantData, InMemoryRestaurantData>();
+builder.Services.AddScoped<IRestaurantData, SqlRestaurantData>();
+
 //Database configuration
 builder.Services.AddDbContextPool<OddToFoodDbContext>(options =>
 {

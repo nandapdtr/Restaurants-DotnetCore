@@ -50,6 +50,7 @@ namespace OdeToFood.Pages.Restaurants
 				}
 				//This temp data will be cleared on reloading the page
 				TempData["Message"] = "Restaurant Saved!!";
+				restaurantData.Commit();
 				return RedirectToPage("./Detail", new { restaurantId = Restaurant.Id });
 			}
 			Cuisines = htmlHelper.GetEnumSelectList<CuisineType>();
