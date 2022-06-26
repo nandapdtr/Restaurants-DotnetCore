@@ -13,22 +13,10 @@
 		</div>
 	</div>
 </form>
-
-<table class="table">
-	@foreach (var restaurant in Model.Restaurants)
-	{
-		<tr>
-			<td>@restaurant.Name</td>
-			<td>@restaurant.Location</td>
-			<td>@restaurant.Cuisine</td>
-			<td>
-				<a class="btn btn-primary" asp-page="./Detail" asp-route-restaurantId="@restaurant.Id">Details</a>
-				<a class="btn btn-primary" asp-page="./Edit" asp-route-restaurantId="@restaurant.Id">Edit</a>
-				<a class="btn btn-primary" asp-page="./Delete" asp-route-restaurantId="@restaurant.Id">Delete</a>
-			</td>
-		</tr>
-	}
-</table>
+@foreach(var restaurant in Model.Restaurants)
+{
+	<partial name="_Summary" model="restaurant"></partial>
+}
 <a asp-page="./Edit" class="btn btn-primary">Add New Restaurant</a>
 
 @section footer {
