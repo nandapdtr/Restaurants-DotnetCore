@@ -30,5 +30,7 @@
 	}
 </table>
 <a asp-page="./Edit" class="btn btn-primary">Add New Restaurant</a>
-@Model.SearchTerm
-@Model.Message
+
+@section footer {
+	<div>@Model.Message</div>
+}
