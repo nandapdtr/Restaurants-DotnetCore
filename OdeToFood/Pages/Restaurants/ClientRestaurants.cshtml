@@ -2,13 +2,26 @@
 @model OdeToFood.Pages.Restaurants.ClientRestaurantsModel
 @{
 }
-
+<table class="table" id="restaurants"></table>
 @section Scripts {
+	<script src="~/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+	<script src="~/node_modules/datatables.net-bs5/js/dataTables.bootstrap5.js"></script>
+	<link rel="stylesheet" type="text/css" href="~/node_modules/datatables.net-bs5/css/dataTables.bootstrap5.css"/>
 	<script>
 		$(function(){
+			var cuisines = ["Unknown", "Indian", "Italian", "Mexican"];
 			$.ajax("/api/restaurants", {method: "get"})
 			.then(function(response){
-				console.dir(response);
+                $("#restaurants").dataTable({
+					data: response,
+					columns: [
+                        {"data": "name"},
+                        {"data": "location"},
+                        { "data": "cuisine", "render": function(data) { 
+                            return cuisines[data];
+						} }
+					]
+                });
 			});
 		});
 	</script>
