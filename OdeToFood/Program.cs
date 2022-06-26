@@ -15,6 +15,7 @@ builder.Services.AddDbContextPool<OddToFoodDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("OdeToFoodDb"));
 });
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,5 +34,10 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 
 app.Run();
