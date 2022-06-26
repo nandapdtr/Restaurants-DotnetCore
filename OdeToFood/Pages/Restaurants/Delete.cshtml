@@ -1,0 +1,17 @@
+﻿@page "{restaurantId:int}"
+@model OdeToFood.Pages.Restaurants.DeleteModel
+@{
+	//To not use any layout
+	//Layout = null;
+	//To use a specific layout
+	//Layout = "_Layout2";
+}
+
+<div class="alert alert-danger">
+	Are you sure you want to delete @Model.Restaurant.Name
+</div>
+
+<form method="post">
+	<button type="submit" class="btn btn-primary">Yes!</button>
+	<a asp-page="List" class="btn btn-outline-primary">Cancel</a>
+</form>
