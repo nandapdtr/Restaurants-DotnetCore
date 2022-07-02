@@ -34,7 +34,7 @@ namespace OdeToFood.Data
 
         public Restaurant GetRestaurantById(int id)
         {
-            return db.Restaurants.Find(id);
+            return db.Restaurants.Where(r=>r.Id==id).FirstOrDefault();
         }
 
         public IEnumerable<Restaurant> GetRestaurantsByName(string name)
