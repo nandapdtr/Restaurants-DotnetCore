@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OdeToFood.Core;
 using OdeToFood.Data;
@@ -10,10 +11,12 @@ namespace OdeToFood.Api
     public class RestaurantsController : Controller
     {
         private readonly IRestaurantData restaurantData;
+        private readonly IMapper mapper;
 
-        public RestaurantsController(IRestaurantData restaurantData)
+        public RestaurantsController(IRestaurantData restaurantData, IMapper mapper)
         {
             this.restaurantData = restaurantData;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -22,7 +25,7 @@ namespace OdeToFood.Api
             try
             {
                 var restaurants = restaurantData.GetAll();
-                return Ok(restaurants);
+                return Ok(mapper.Map<IEnumerable<RestaurantModel>>(restaurants));
             }
             catch (Exception ex)
             {
@@ -38,7 +41,7 @@ namespace OdeToFood.Api
                 var restaurant = restaurantData.GetRestaurantById(id);
                 if (restaurant != null)
                 {
-                    return Ok(restaurant);
+                    return Ok(mapper.Map<RestaurantModel>(restaurant));
                 }
             }
             catch
@@ -49,13 +52,19 @@ namespace OdeToFood.Api
         }
 
         [HttpPost]
-        public IActionResult AddRestaurant([FromBody] Restaurant restaurant)
+        public IActionResult AddRestaurant([FromBody] RestaurantModel restaurant)
         {
             try
             {
-                restaurantData.Add(restaurant);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                var newRestaurant = mapper.Map<Restaurant>(restaurant);
+                restaurantData.Add(newRestaurant);
                 restaurantData.Commit();
-                return CreatedAtAction(nameof(GetRestaurantById), new { id = restaurant.Id }, restaurant);
+                var model = mapper.Map<RestaurantModel>(newRestaurant);
+                return CreatedAtAction(nameof(GetRestaurantById), new { id = model.RestaurantId }, model);
             }
             catch (Exception)
             {
@@ -64,7 +73,7 @@ namespace OdeToFood.Api
         }
 
         [HttpPut]
-        public IActionResult UpdateRestaurant([FromBody] Restaurant restaurant)
+        public IActionResult UpdateRestaurant([FromBody] RestaurantModel restaurant)
         {
             try
             {
@@ -74,13 +83,19 @@ namespace OdeToFood.Api
                 //{
                 //    return NotFound();
                 //}
-                restaurantData.Update(restaurant);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                var updatingRestaurant = mapper.Map<Restaurant>(restaurant);
+                restaurantData.Update(updatingRestaurant);
                 restaurantData.Commit();
-                return Ok(restaurant);
+                var model = mapper.Map<RestaurantModel>(updatingRestaurant);
+                return Ok(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex);
             }
         }
 
@@ -93,7 +108,7 @@ namespace OdeToFood.Api
                 if (res != null)
                 {
                     restaurantData.Commit();
-                    return Ok(res);
+                    return Ok(mapper.Map<RestaurantModel>(res));
                 }
             }
             catch (Exception)

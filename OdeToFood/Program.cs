@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using OdeToFood.Data;
 
@@ -14,6 +15,9 @@ builder.Services.AddDbContextPool<OddToFoodDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("OdeToFoodDb"));
 });
+
+//Automapper
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 
 var app = builder.Build();
